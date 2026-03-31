@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlay,
@@ -303,4 +304,3 @@ const PersonProfilePage = () => {
 }
 
 export default PersonProfilePage
-age

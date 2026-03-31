@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import GNB from './components/GNB'
+import Footer from './components/Footer'
 import PersonPage from './pages/PersonPage'
 import PersonCategoryPage from './pages/PersonCategoryPage'
 import PersonProfilePage from './pages/PersonProfilePage'
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='/profile' element={<PersonPage />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </BrowserRouter>
   )
