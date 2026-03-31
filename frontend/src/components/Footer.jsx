@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
-const Footer = () => {
+export const Footer = () => {
   const footerLinks = [
     '자막 및 음성', '음성 지원', '고객 센터', '기프트카드',
     '미디어 센터', '투자 정보(IR)', '입사 정보', '이용 약관',
@@ -44,5 +44,4 @@ const Footer = () => {
     </footer>
   )
 }
-
 export default Footer

@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import GNB from './components/GNB'
 import Footer from './components/Footer'
@@ -5,7 +6,7 @@ import PersonPage from './pages/PersonPage'
 import PersonCategoryPage from './pages/PersonCategoryPage'
 import PersonProfilePage from './pages/PersonProfilePage'
 
-const App = () => {
+export default function App() {
   return (
     <BrowserRouter>
       <div className='min-h-screen flex flex-col bg-[#0e0e13]'>
@@ -16,7 +17,6 @@ const App = () => {
             <Route path='/people' element={<PersonPage />} />
             <Route path='/people/category' element={<PersonCategoryPage />} />
             <Route path='/people/:id' element={<PersonProfilePage />} />
-            {/* Placeholder routes for GNB links */}
             <Route path='/movie' element={<PersonPage />} />
             <Route path='/tv' element={<PersonPage />} />
             <Route path='/ask' element={<PersonPage />} />
@@ -29,5 +29,3 @@ const App = () => {
     </BrowserRouter>
   )
 }
-
-export default App
