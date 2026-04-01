@@ -10,7 +10,9 @@
       "Bash(mv \"Mode.tokens \\(2\\).json\" \"tokens.radius.json\")",
       "Bash(mv \"Mode.tokens \\(3\\).json\" \"tokens.shadow.json\")",
       "Bash(mv \"Mode.tokens \\(4\\).json\" \"tokens.spacing.json\")",
-      "Bash(mv \"Mode.tokens \\(5\\).json\" \"tokens.typography.json\")"
+      "Bash(mv \"Mode.tokens \\(5\\).json\" \"tokens.typography.json\")",
+      "mcp__claude_ai_Figma__get_metadata",
+      "Bash(ls /c/Users/Administrator/Desktop/VODA/frontend/.env*)"
     ]
   }
 }
