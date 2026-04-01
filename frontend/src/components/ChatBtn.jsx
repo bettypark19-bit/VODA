@@ -1,6 +1,7 @@
+import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-// ChatBubble 컴포넌트가 있다면 이를 활용하는 것이 지침입니다.
+import { faCommentDots, faXmark, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 const AIChatWindow = ({ onClose }) => {
   return (
@@ -15,7 +16,6 @@ const AIChatWindow = ({ onClose }) => {
 
       {/* Messages Area: ChatBubble 패턴 적용 */}
       <div className='flex-1 overflow-y-auto p-6 space-y-4'>
-        {/* 타입에 따라 ChatBubble 호출 권장 */}
         <div className='self-start bg-zinc-800 p-4 rounded-2xl rounded-tl-none text-zinc-50'>
           안녕하세요! 어떤 영화를 찾으시나요?
         </div>
@@ -38,4 +38,31 @@ const AIChatWindow = ({ onClose }) => {
   )
 }
 
-export default AIChatWindow
+const ChatBtn = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <>
+      <div className='fixed bottom-6 right-6 z-50'>
+        <button
+          className={twMerge(
+            'flex items-center justify-center rounded-full transition-all duration-300 size-16 shadow-lg cursor-pointer',
+            'bg-primary-400 hover:bg-primary-500 text-zinc-950',
+            isOpen && 'rotate-90'
+          )}
+          onClick={() => setIsOpen(prev => !prev)}
+        >
+          <FontAwesomeIcon icon={isOpen ? faXmark : faCommentDots} className='text-2xl' />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className='fixed bottom-[100px] right-6 z-50 animate-fade-in'>
+          <AIChatWindow onClose={() => setIsOpen(false)} />
+        </div>
+      )}
+    </>
+  )
+}
+
+export default ChatBtn

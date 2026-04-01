@@ -1,8 +1,6 @@
-import GNB from '../components/GNB'
 import Hero from '../components/Hero'
 import SectionTitle from '../components/SectionTitle'
 import MovieCard from '../components/MovieCard'
-import Footer from '../components/Footer'
 
 // 임시 영화 데이터 (TMDB 연동 전까지 사용)
 const POPULAR_MOVIES = [
@@ -23,9 +21,7 @@ const NEW_MOVIES = [
 
 const HomePage = () => {
   return (
-    <div className='min-h-screen bg-[#0e0e13] text-white'>
-      <GNB />
-
+    <div className='text-white'>
       {/* Hero */}
       <Hero />
 
@@ -67,8 +63,6 @@ const HomePage = () => {
         </section>
 
       </main>
-
-      <Footer />
     </div>
   )
 }
