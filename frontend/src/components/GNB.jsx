@@ -20,7 +20,7 @@ const GNB = () => {
     )
 
   return (
-    <header className='sticky top-0 z-50 h-[100px] flex items-center justify-between px-12 bg-[#0e0e13]/80 backdrop-blur-md shadow-glow-purple border-b border-white/5'>
+    <header className='sticky top-0 z-50 h-25 flex items-center justify-between px-12 bg-base/80 backdrop-blur-md shadow-glow-purple border-b border-white/5'>
       {/* 로고 */}
       <Link to='/' className='text-3xl font-bold tracking-tighter text-primary-400'>
         VODA

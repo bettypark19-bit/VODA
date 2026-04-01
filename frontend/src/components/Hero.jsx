@@ -12,8 +12,8 @@ const Hero = ({ title, backdrop, overview, rating }) => {
           alt={title} 
           className='size-full object-cover object-top'
         />
-        <div className='absolute inset-0 bg-gradient-to-r from-[#0e0e13] via-[#0e0e13]/60 to-transparent' />
-        <div className='absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-transparent to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-r from-base via-base/60 to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-t from-base via-transparent to-transparent' />
       </div>
 
       {/* 콘텐츠 */}

@@ -46,6 +46,16 @@
 
   /* GNB 보라 글로우 섀도 */
   --shadow-glow-purple: 0px 0px 60px 0px rgba(189, 157, 255, 0.1);
+
+  /* 배경 기본 색상 */
+  --color-base: #0e0e13;
+
+  /* 콘텐츠 최대 너비 (1920px) */
+  --max-width-content: 120rem;
+
+  /* 카드 너비 */
+  --width-card-sm: 22.5rem;
+  --width-card-md: 25.625rem;
 }
 
 @utility scrollbar-hide {

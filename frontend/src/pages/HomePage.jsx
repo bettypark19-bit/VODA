@@ -39,7 +39,7 @@ const HomePage = () => {
   }, [])
 
   return (
-    <div className='bg-[#0e0e13] min-h-screen pb-24'>
+    <div className='bg-base min-h-screen pb-24'>
       {/* 1. 히어로 섹션 */}
       {heroMovie && (
         <Hero
@@ -58,7 +58,7 @@ const HomePage = () => {
           <SectionTitle title='지금 가장 핫한 콘텐츠' subtitle='인기 영화' link='/movie' />
           <div className='flex gap-6 overflow-x-auto pb-8 no-scrollbar'>
             {popularMovies.map((movie) => (
-              <div key={movie.id} className='min-w-[280px] md:min-w-[340px]'>
+              <div key={movie.id} className='min-w-72 md:min-w-80'>
                 <MovieCard
                   id={movie.id}
                   title={movie.title}
@@ -77,7 +77,7 @@ const HomePage = () => {
           <SectionTitle title='막 올라온 따끈한 신작' subtitle='최신 영화' link='/movie' />
           <div className='flex gap-6 overflow-x-auto pb-8 no-scrollbar'>
             {newMovies.map((movie) => (
-              <div key={movie.id} className='min-w-[280px] md:min-w-[340px]'>
+              <div key={movie.id} className='min-w-72 md:min-w-80'>
                 <MovieCard
                   id={movie.id}
                   title={movie.title}
@@ -96,7 +96,7 @@ const HomePage = () => {
           <SectionTitle title='평단이 극찬한 명작' subtitle='최고의 영화' link='/movie' />
           <div className='flex gap-6 overflow-x-auto pb-8 no-scrollbar'>
             {topRatedMovies.map((movie) => (
-              <div key={movie.id} className='min-w-[280px] md:min-w-[340px]'>
+              <div key={movie.id} className='min-w-72 md:min-w-80'>
                 <MovieCard
                   id={movie.id}
                   title={movie.title}

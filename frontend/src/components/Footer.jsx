@@ -13,10 +13,10 @@ const Footer = () => {
   ]
 
   return (
-    <footer className='bg-black text-[#a1a1aa] py-16 px-12 border-t border-white/5'>
-      <div className='max-w-[1920px] mx-auto'>
+    <footer className='bg-black text-neutral-400 py-16 px-12 border-t border-white/5'>
+      <div className='max-w-content mx-auto'>
         {/* 소셜 미디어 아이콘 */}
-        <div className='flex gap-6 mb-10 text-[#fafafa] text-2xl'>
+        <div className='flex gap-6 mb-10 text-neutral-50 text-2xl'>
           {SOCIAL.map(({ label, text }) => (
             <a key={label} href='#' className='hover:text-white transition-colors w-8 h-8 flex items-center justify-center border border-white/20 rounded-full text-sm font-bold' aria-label={label}>
               {text}

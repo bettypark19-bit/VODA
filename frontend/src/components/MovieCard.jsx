@@ -35,7 +35,7 @@ const MovieCard = ({ id, type = 'movie', title, genre, year, badgeText, posterUr
         </h3>
         <div className='flex items-center gap-2 text-sm text-neutral-500 mt-1'>
           <span>{genre}</span>
-          <span className='text-[10px] opacity-30'>|</span>
+          <span className='text-xs opacity-30'>|</span>
           <span>{year}</span>
         </div>
       </div>
