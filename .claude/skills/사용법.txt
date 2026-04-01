@@ -1,4 +1,0 @@
-SKILL.md는 127행으로 가볍게 유지했다. 작업 유형(컴포넌트 생성 / TMDB 연동 / 페이지 조립 / 에러 수정)을 판별하면, 해당 참조 파일만 읽도록 분리했다. 팀원이 "Card 컴포넌트 만들어줘"라고 하면 references/components.md만 로딩되고, "에러 수정해줘"라고 하면 references/rules.md만 로딩된다. 전체 1129행을 매번 읽지 않는다.
-
-사용 방법:
-이 폴더를 프로젝트 저장소의 .claude/skills/voda-vibe/에 넣거나, Claude Code의 스킬 디렉토리에 배치하면 된다. Gemini CLI에서는 GEMINI.md에 이 스킬의 핵심 규칙(절대금지, 에러분류)을 복사하여 사용한다.

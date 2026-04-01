@@ -1,48 +1,120 @@
 import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import heroImg from './assets/hero.png'
 import './App.css'
-import GenreTab from './components/GenreTab'
 
 function App() {
-  const [activeTab, setActiveTab] = useState(0)
-
-  const testTabs = [
-    { id: 0,     name: '전체' },
-    { id: 18,    name: '드라마' },
-    { id: 28,    name: '액션' },
-    { id: 35,    name: '코미디' },
-    { id: 53,    name: '스릴러' },
-    { id: 12,    name: '어드벤처' },
-    { id: 878,   name: 'SF' },
-    { id: 27,    name: '공포' },
-    { id: 16,    name: '애니메이션' },
-    { id: 80,    name: '범죄' },
-    { id: 9648,  name: '미스테리' },
-    { id: 10749, name: '로맨스' },
-    { id: 14,    name: '판타지' },
-    { id: 10751, name: '가족' },
-    { id: 36,    name: '역사' },
-    { id: 10752, name: '전쟁' },
-    { id: 99,    name: '다큐멘터리' },
-    { id: 10402, name: '음악' },
-    { id: 37,    name: '서부' },
-    { id: 10770, name: 'TV 영화' },
-  ]
+  const [count, setCount] = useState(0)
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <h1 className="text-3xl font-bold p-8">GenreTab 컴포넌트 테스트</h1>
-      
-      {/* 방금 만든 GenreTab 렌더링 */}
-      <GenreTab 
-        tabs={testTabs} 
-        active={activeTab} 
-        onChange={(id) => setActiveTab(id)} 
-      />
-      
-      <div className="p-8">
-        <p className="text-xl">현재 선택된 탭 ID: <span className="text-primary-400 font-bold">{activeTab}</span></p>
-      </div>
-    </div>
+    <>
+      <section id="center">
+        <div className="hero">
+          <img src={heroImg} className="base" width="170" height="179" alt="" />
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
+        </div>
+        <div>
+          <h1>Get started</h1>
+          <p>
+            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+          </p>
+        </div>
+        <button
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+      </section>
+
+      <div className="ticks"></div>
+
+      <section id="next-steps">
+        <div id="docs">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#documentation-icon"></use>
+          </svg>
+          <h2>Documentation</h2>
+          <p>Your questions, answered</p>
+          <ul>
+            <li>
+              <a href="https://vite.dev/" target="_blank">
+                <img className="logo" src={viteLogo} alt="" />
+                Explore Vite
+              </a>
+            </li>
+            <li>
+              <a href="https://react.dev/" target="_blank">
+                <img className="button-icon" src={reactLogo} alt="" />
+                Learn more
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="social">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#social-icon"></use>
+          </svg>
+          <h2>Connect with us</h2>
+          <p>Join the Vite community</p>
+          <ul>
+            <li>
+              <a href="https://github.com/vitejs/vite" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#github-icon"></use>
+                </svg>
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://chat.vite.dev/" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#discord-icon"></use>
+                </svg>
+                Discord
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/vite_js" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#x-icon"></use>
+                </svg>
+                X.com
+              </a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/vite.dev" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#bluesky-icon"></use>
+                </svg>
+                Bluesky
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+    </>
   )
 }
 
