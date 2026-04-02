@@ -47,15 +47,14 @@ const PersonPage = () => {
 
   return (
     <div className='bg-neutral-950 min-h-screen pb-32'>
-      {/* 히어로 — 오늘의 트렌딩 1위 인물 */}
-      {heroPerson && (
-        <Hero
-          type='person'
-          title={heroPerson.name}
-          img={heroPerson.profile_path}
-          department={heroPerson.known_for_department}
-        />
-      )}
+      {/* Hero 섹션 - 명세서(PersonPageHeroText.md) 기준 구현 */}
+      <Hero
+        type='person'
+        subtitle='ETHEREAL PROFILES'
+        title='사람을 보다'
+        description={'영화와 드라마를 빛낸 배우들과 감독들을 만나보세요.\n그들의 작품 세계와 필모그래피를 탐험해 보세요.'}
+        backdrop={heroPerson?.profile_path}
+      />
 
       {/* 검색바 */}
       <div className='px-12 mt-10'>
@@ -69,7 +68,6 @@ const PersonPage = () => {
 
       {/* 인물 그리드 섹션 */}
       <div className='px-12 mt-16'>
-        {/* SectionTitle은 전체 너비(px-12)에 맞춰 정렬 */}
         <SectionTitle
           title={activeTab === 'trending' ? '오늘의 트렌딩 인물' : '인기 인물'}
           subtitle={activeTab === 'trending' ? '지금 가장 주목받는 인물' : '전 세계에서 사랑받는 인물'}
@@ -93,7 +91,6 @@ const PersonPage = () => {
 
       {/* Focus 섹션 (Director Insight + Rookie Focus) */}
       <div className='px-12 mt-20'>
-        {/* SectionTitle이 px-12 전체 너비에 맞춰 정렬 (위와 동일한 패턴) */}
         <SectionTitle
           title='포커스 인물'
           subtitle='VODA가 주목하는 이번 주 인물 기획전'
