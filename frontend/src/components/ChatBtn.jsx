@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
+const BACKEND = 'https://vodamovie.onrender.com'
+
 // 초기 AI 인사 메시지
 const INIT_MESSAGES = [
   {
@@ -15,6 +17,7 @@ const INIT_MESSAGES = [
 const ChatWindow = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState(INIT_MESSAGES)
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
   const bottomRef = useRef(null)
 
   // 메시지 추가 시 스크롤 하단 이동
@@ -22,11 +25,25 @@ const ChatWindow = ({ isOpen, onClose }) => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const trimmed = input.trim()
-    if (!trimmed) return
+    if (!trimmed || loading) return
     setMessages((prev) => [...prev, { id: Date.now(), role: 'user', text: trimmed }])
     setInput('')
+    setLoading(true)
+    try {
+      const res = await fetch(BACKEND, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: trimmed }),
+      })
+      const data = await res.json()
+      setMessages((prev) => [...prev, { id: Date.now(), role: 'ai', text: data.reply }])
+    } catch {
+      setMessages((prev) => [...prev, { id: Date.now(), role: 'ai', text: '서버 연결에 실패했습니다. 다시 시도해주세요.' }])
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleKeyDown = (e) => {
@@ -89,6 +106,14 @@ const ChatWindow = ({ isOpen, onClose }) => {
             </div>
           )
         )}
+        {/* 로딩 인디케이터 */}
+        {loading && (
+          <div className='flex justify-start'>
+            <div className='rounded-tr-[18px] rounded-br-[18px] rounded-bl-[18px] bg-neutral-900 px-[18px] py-[18px]'>
+              <p className='font-serif text-lg leading-6 text-neutral-400'>...</p>
+            </div>
+          </div>
+        )}
         <div ref={bottomRef} />
       </div>
 
@@ -101,11 +126,13 @@ const ChatWindow = ({ isOpen, onClose }) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder='메시지를 입력하세요...'
-            className='flex-1 rounded-xl bg-white/5 px-[18px] py-[13.5px] font-serif text-lg text-neutral-50 placeholder:text-neutral-400 outline-none'
+            disabled={loading}
+            className='flex-1 rounded-xl bg-white/5 px-[18px] py-[13.5px] font-serif text-lg text-neutral-50 placeholder:text-neutral-400 outline-none disabled:opacity-50'
           />
           <button
             onClick={handleSend}
-            className='shrink-0 cursor-pointer text-primary-400 transition-colors hover:text-primary-300'
+            disabled={loading || !input.trim()}
+            className='shrink-0 cursor-pointer text-primary-400 transition-colors hover:text-primary-300 disabled:opacity-50 disabled:cursor-not-allowed'
           >
             <i className='fa-solid fa-paper-plane text-xl'></i>
           </button>
