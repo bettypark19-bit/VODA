@@ -5,6 +5,7 @@ import Feed from '../components/Feed'
 import MoodGrid from '../components/MoodGrid'
 import SearchBar from '../components/SearchBar'
 import FilterChips from '../components/FilterChips'
+import ChatBtn from '../components/ChatBtn'
 
 // TMDB 장르 ID 기반 필터
 const GENRE_FILTERS = [
@@ -111,6 +112,7 @@ const FindPage = () => {
       {/* 4. 무드 그리드 */}
       <MoodGrid moods={MOODS} onItemClick={handleMood} />
 
+      <ChatBtn />
     </main>
   )
 }

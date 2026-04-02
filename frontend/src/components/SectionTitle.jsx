@@ -1,7 +1,9 @@
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
 
 // SectionTitle: 디자인 유지 및 모든 섹션 '전체보기' 표시
 const SectionTitle = ({ title, subtitle, link = '#' }) => {
+  const navigate = useNavigate()
+
   return (
     <div className='flex items-center w-full py-10'>
       {/* 왼쪽: 제목 + 부제목 (기존 디자인 유지) */}
@@ -26,14 +28,14 @@ const SectionTitle = ({ title, subtitle, link = '#' }) => {
         )}
       </div>
 
-      {/* 오른쪽: 전체보기 버튼 (모든 섹션에 표시) */}
-      <Link
-        to={link}
-        className='flex items-center gap-2 shrink-0 cursor-pointer hover:opacity-80 transition-opacity'
+      {/* 오른쪽: 전체보기 버튼 */}
+      <button
+        onClick={() => navigate(link)}
+        className='flex items-center gap-2 shrink-0 cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none'
       >
         <span className='font-serif font-medium text-2xl text-primary-400'>전체보기</span>
         <i className='fa-solid fa-arrow-right text-primary-400 text-xl' />
-      </Link>
+      </button>
     </div>
   )
 }

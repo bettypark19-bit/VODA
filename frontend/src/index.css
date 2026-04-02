@@ -47,6 +47,9 @@
   /* GNB 보라 글로우 섀도 */
   --shadow-glow-purple: 0px 0px 60px 0px rgba(189, 157, 255, 0.1);
 
+  /* 프로필 아바타 글로우 섀도 */
+  --shadow-glow-avatar: 0px 0px 30px 0px rgba(189, 157, 255, 0.4);
+
   /* 배경 기본 색상 */
   --color-base: #0e0e13;
 
