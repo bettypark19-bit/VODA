@@ -7,6 +7,7 @@ import PersonPage from '../pages/PersonPage'
 import AskPage from '../pages/AskPage'
 import SearchPage from '../pages/SearchPage'
 import ProfilePage from '../pages/ProfilePage'
+import FindPage from '../pages/FindPage'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: '/ask', element: <AskPage /> },
       { path: '/search', element: <SearchPage /> },
       { path: '/profile', element: <ProfilePage /> },
+      { path: '/find', element: <FindPage /> },
     ],
   },
 ])

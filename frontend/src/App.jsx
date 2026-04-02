@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router'
 import GNB from './components/GNB'
 import Footer from './components/Footer'
+import ChatBtn from './components/ChatBtn'
 import ScoreSummary from './components/ScoreSummary';
 
 /**
@@ -14,6 +15,7 @@ const Layout = () => (
       <Outlet />
     </main>
     <Footer />
+    <ChatBtn />
   </div>
 )
 
