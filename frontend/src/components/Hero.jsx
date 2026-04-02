@@ -3,7 +3,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faInfoCircle, faStar } from '@fortawesome/free-solid-svg-icons'
 import DetailBtn from './DetailBtn'
 
-const Hero = ({ title, backdrop, overview, rating }) => {
+const Hero = ({ type = 'default', title, backdrop, overview, rating, img, department }) => {
+  // 인물 전용 히어로
+  if (type === 'person') {
+    return (
+      <section className='relative w-full h-96 overflow-hidden flex items-end'>
+        <div className='absolute inset-0'>
+          <img
+            src={EP.img(img, 'h632')}
+            alt={title}
+            className='size-full object-cover object-top'
+          />
+          <div className='absolute inset-0 bg-linear-to-r from-neutral-950 via-neutral-950/70 to-transparent' />
+          <div className='absolute inset-0 bg-linear-to-t from-neutral-950 via-transparent to-transparent' />
+        </div>
+        <div className='relative px-12 md:px-20 pb-14 flex flex-col gap-2'>
+          {department && (
+            <span className='text-primary-400 font-semibold text-lg'>{department}</span>
+          )}
+          <h1 className='text-6xl md:text-8xl font-bold tracking-tighter text-white drop-shadow-2xl'>
+            {title}
+          </h1>
+        </div>
+      </section>
+    )
+  }
+
+  // 기본 히어로 (영화/TV)
   return (
     <section className='relative w-full h-[85vh] overflow-hidden'>
       {/* 배경 이미지 (그라데이션 오버레이 포함) */}
