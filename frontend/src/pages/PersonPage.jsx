@@ -1,4 +1,5 @@
 import SearchBar from '../components/SearchBar'
+import SectionTitle from '../components/SectionTitle'
 
 const PersonPage = () => {
   const handleSearch = (query) => {
@@ -13,7 +14,9 @@ const PersonPage = () => {
         <SearchBar variant='normal' onSubmit={handleSearch} />
       </div>
 
-      <div className='mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8'>
+      <SectionTitle title='인기 인물' link='/person/category' />
+
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8'>
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div key={i} className='flex flex-col items-center gap-4 animate-pulse'>
             <div className='w-full aspect-square rounded-full bg-zinc-800' />
