@@ -1,53 +1,102 @@
 import { useState, useEffect } from 'react'
-import ChipBtn from '../components/ChipBtn'
-import RankCard from '../components/RankCard'
-import SectionTitle from '../components/SectionTitle'
+import Hero from '../components/Hero'
+import GenreTab from '../components/GenreTab'
+import Feed from '../components/Feed'
 import { EP } from '../api/tmdb'
+import ChatBtn from '../components/ChatBtn'
 
 const MoviePage = () => {
-  const [activeTab, setActiveTab] = useState('전체')
+  const [heroMovie, setHeroMovie] = useState(null)
+  const [genres, setGenres] = useState([{ id: 0, name: '전체' }])
+  const [activeTab, setActiveTab] = useState(0)
+  
   const [rankMovies, setRankMovies] = useState([])
-  const genres = ['전체', '액션', '로맨스', '스릴러', 'SF', '코미디']
+  const [newMovies, setNewMovies] = useState([])
+  const [genreMovies, setGenreMovies] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // 1. 장르 목록 가져오기
+    EP.genres('movie').then((res) => {
+      setGenres([{ id: 0, name: '전체' }, ...res.data.genres])
+    })
+
+    // 2. 히어로 및 랭킹 데이터
     EP.popular('movie').then((res) => {
-      // 1위부터 10위까지만 사용
-      setRankMovies(res.data.results.slice(0, 10))
-    }).catch(console.error)
+      const results = res.data.results
+      setHeroMovie(results[0])
+      setRankMovies(results.slice(0, 10))
+      setLoading(false)
+    })
+
+    // 3. 최신 개봉작
+    EP.nowPlaying('movie').then((res) => {
+      setNewMovies(res.data.results)
+    })
   }, [])
 
+  // 장르 탭 변경 시 해당 장르 영화 가져오기
+  useEffect(() => {
+    const params = activeTab !== 0 ? { with_genres: activeTab } : {}
+    EP.discover('movie', params).then((res) => {
+      setGenreMovies(res.data.results)
+    })
+  }, [activeTab])
+
+  if (loading) return <div className='p-20 text-center text-zinc-500'>로딩 중...</div>
+
   return (
-    <div className='bg-neutral-950 min-h-screen pb-24 text-white px-12 py-16'>
-      <h1 className='text-3xl font-bold mb-8'>영화보다</h1>
-      
-      <div className='flex flex-wrap gap-3 mb-16'>
-        {genres.map((genre) => (
-          <ChipBtn
-            key={genre}
-            label={genre}
-            active={activeTab === genre}
-            onClick={() => setActiveTab(genre)}
+    <div className='bg-neutral-950 min-h-screen pb-32'>
+      {/* 히어로 섹션 */}
+      {heroMovie && (
+        <Hero
+          title={heroMovie.title}
+          backdrop={heroMovie.backdrop_path}
+          poster={heroMovie.poster_path}
+          overview={heroMovie.overview}
+          rating={heroMovie.vote_average}
+        />
+      )}
+
+      {/* 장르 탭 */}
+      <GenreTab 
+        tabs={genres} 
+        active={activeTab} 
+        onChange={setActiveTab} 
+      />
+
+      <div className='px-12 mt-12 flex flex-col gap-10'>
+        {/* 1. 랭킹 피드 (전체일 때만 표시하거나 상단 고정) */}
+        {activeTab === 0 && (
+          <Feed 
+            type='rank' 
+            title='지금 가장 뜨거운 영화' 
+            sub='VODA에서 가장 많이 찾은 영화 랭킹' 
+            items={rankMovies} 
+            mediaType='movie' 
           />
-        ))}
+        )}
+
+        {/* 2. 장르별/전체 피드 */}
+        <Feed 
+          type='normal' 
+          title={activeTab === 0 ? '추천 영화' : `${genres.find(g => g.id === activeTab)?.name} 영화`}
+          sub='당신을 위해 엄선한 명작들'
+          items={genreMovies} 
+          mediaType='movie' 
+        />
+
+        {/* 3. 신작 피드 */}
+        <Feed 
+          type='normal' 
+          title='막 올라온 따끈한 신작' 
+          sub='극장에서 갓 내려온 최신 영화들'
+          items={newMovies} 
+          mediaType='movie' 
+        />
       </div>
 
-      <section>
-        <SectionTitle title='지금 가장 뜨거운 영화' subtitle='Top 10 영화 순위' />
-        <div className='flex gap-10 overflow-x-auto pb-12 pt-4 px-6 no-scrollbar'>
-          {rankMovies.map((movie, idx) => (
-            <RankCard
-              key={movie.id}
-              rank={idx + 1}
-              id={movie.id}
-              type='movie'
-              title={movie.title}
-              poster={movie.poster_path}
-              genre={movie.genre_ids?.[0] ? '영화' : ''} // 실제 프로젝트에서는 장르 매핑 필요
-            />
-          ))}
-        </div>
-      </section>
-      
+      <ChatBtn />
     </div>
   )
 }
