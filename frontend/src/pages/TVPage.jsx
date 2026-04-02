@@ -5,7 +5,7 @@ import Feed from '../components/Feed'
 import { EP } from '../api/tmdb'
 import ChatBtn from '../components/ChatBtn'
 
-const TvPage = () => {
+const TVPage = () => {
   const [heroMovie, setHeroMovie] = useState(null)
   const [genres, setGenres] = useState([{ id: 0, name: '전체' }])
   const [activeTab, setActiveTab] = useState(0)
@@ -97,4 +97,4 @@ const TvPage = () => {
   )
 }
 
-export default TvPage
+export default TVPage
