@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Hero from '../components/Hero'
 import GenreTab from '../components/GenreTab'
 import Feed from '../components/Feed'
+import ChatBubble from '../components/ChatBubble' // ChatBubble 추가
 import { EP } from '../api/tmdb'
 import ChatBtn from '../components/ChatBtn'
 
@@ -94,6 +95,31 @@ const MoviePage = () => {
           items={newMovies} 
           mediaType='movie' 
         />
+
+        {/* [임시] ChatBubble 디자인 미리보기 섹션 */}
+        <section className='mt-10 mb-20 max-w-3xl mx-auto w-full'>
+          <div className='flex items-center gap-2.5 mb-8'>
+            <div className='w-3 h-12 bg-primary-400 rounded-full' />
+            <h2 className='font-serif font-bold text-3xl text-neutral-50'>AI 챗봇 디자인 미리보기 (확정안)</h2>
+          </div>
+          
+          <div className='bg-zinc-900/30 p-10 rounded-[32px] border border-white/5 flex flex-col gap-6'>
+            <ChatBubble 
+              msg='안녕하세요! VODA의 AI 큐레이터입니다. 원하시는 장르나 분위기의 영화가 있으신가요?' 
+              isAi={true} 
+            />
+            
+            <ChatBubble 
+              msg='주말에 가족들과 함께 보기 좋은 따뜻한 픽사 애니메이션 추천해줘!' 
+              isAi={false} 
+            />
+            
+            <ChatBubble 
+              msg='가족과 함께라면 <코코>를 강력 추천드립니다! 사후 세계를 다룬 아름다운 영상미와 감동적인 음악이 어우러져 가족 모두에게 특별한 추억이 될 거예요.' 
+              isAi={true} 
+            />
+          </div>
+        </section>
       </div>
 
       <ChatBtn />
