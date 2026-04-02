@@ -3,7 +3,7 @@ import ProfileTab from "./ProfileTab";
 import ProfileCard from "./ProfileCard";
 import ProfileBar from "./ProfileBar";
 
-export function ProfileFeed() {
+export default function ProfileFeed() {
   return (
     <>
       <SectionTitle />
