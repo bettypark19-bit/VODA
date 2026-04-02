@@ -1,5 +1,3 @@
-import React from 'react'
-
 /**
  * DetailBtn 컴포넌트 (Figma: Hero 내 Action Buttons)
  * @param {string} label - 버튼 텍스트
@@ -27,7 +25,7 @@ const DetailBtn = ({ label, icon, variant = 'primary', onClick }) => {
       {/* 아이콘 크기 및 간격 최적화 */}
       {icon && <span className='text-xl flex items-center'>{icon}</span>}
       
-      <span className='text-base tracking-tight'>
+      <span className='font-serif tracking-tight'>
         {label}
       </span>
     </button>
