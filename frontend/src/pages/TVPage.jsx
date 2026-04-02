@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import ChipBtn from '../components/ChipBtn'
 import RankCard from '../components/RankCard'
 import SectionTitle from '../components/SectionTitle'
-import EpisodeCard from '../components/EpisodeCard'
+import EpisodeSection from '../components/EpisodeSection'
 import { EP } from '../api/tmdb'
 
 const TVPage = () => {
@@ -66,9 +66,9 @@ const TVPage = () => {
         </div>
       </section>
 
-      {/* 에피소드 목록 */}
+      {/* 에피소드 목록 (섹션 컴포넌트 활용) */}
       {selectedTv && (
-        <section className='mt-8'>
+        <div className='mt-8'>
           <SectionTitle
             title={`${selectedTv.name} — 시즌 1`}
             subtitle='에피소드 목록'
@@ -76,20 +76,9 @@ const TVPage = () => {
           {loadingEp ? (
             <p className='text-zinc-500 mt-4'>불러오는 중...</p>
           ) : (
-            <div className='flex flex-col gap-6 mt-6'>
-              {episodes.map((ep) => (
-                <EpisodeCard
-                  key={ep.id}
-                  ep={ep.episode_number}
-                  title={ep.name}
-                  thumb={ep.still_path}
-                  duration={ep.runtime ? `${ep.runtime}분` : ''}
-                  overview={ep.overview}
-                />
-              ))}
-            </div>
+            <EpisodeSection episodes={episodes} showTitle={false} />
           )}
-        </section>
+        </div>
       )}
     </div>
   )
