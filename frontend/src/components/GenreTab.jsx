@@ -1,6 +1,6 @@
 function GenreTab({ tabs, active, onChange }) {
   return (
-    <div className="w-full backdrop-blur-md bg-neutral-900/80 py-9 px-4">
+    <div className="w-full backdrop-blur-md bg-neutral-900/80 py-9 px-8">
       <div className="flex flex-wrap justify-center gap-4 max-w-content mx-auto">
         {tabs.map((tab) => (
           <button
