@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import Feed from "../components/Feed"; 
 import { EP } from '../api/tmdb'
 import ProfileGrid from "../components/ProfileGrid";
-import ReviewCard from "../components/ReviewCard"; // ReviewCard 임포트
+import ReviewCard from "../components/ReviewCard";
+import SectionTitle from "../components/SectionTitle";
+
 
 // 내가 작성한 리뷰 예시 데이터
 const myReviews = [
@@ -40,6 +42,13 @@ const myReviews = [
   }
 ];
 
+// 가상 사용자 데이터
+const mockUser = {
+  name: 'VODA 마스터',
+  email: 'voda_master@voda.ai',
+  isSubscribed: true
+};
+
 const ProfilePage = () => {
   const [popularMovies, setPopularMovies] = useState([])
   const [showAllReviews, setShowAllReviews] = useState(false)
@@ -57,13 +66,12 @@ const ProfilePage = () => {
 
   return (
     <div className="text-white px-12 py-16 bg-neutral-950 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8">프로필</h1>
       
       {popularMovies.length > 0 && (
         <Feed
           type="play" 
           title="시청 중인 콘텐츠"
-          sub="이어보기"
+          subtitle="이어보기"
           items={popularMovies.slice(0, 5)}
           mediaType="movie"
         />
@@ -71,12 +79,9 @@ const ProfilePage = () => {
 
       {/* 내가 작성한 리뷰 섹션 */}
       <section className="my-16">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-2.5 h-8 bg-primary-400 rounded-full" />
-          <h2 className="font-serif font-bold text-3xl text-zinc-50 tracking-tight">내가 작성한 리뷰</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 gap-5 max-w-8xl">
+        <SectionTitle title="내가 작성한 리뷰" hideAllBtn={true} />
+
+        <div className="grid grid-cols-1 gap-4 w-full mt-4">
           {/* showAllReviews 상태에 따라 2개 또는 전체 노출 */}
           {(showAllReviews ? myReviews : myReviews.slice(0, 2)).map(review => (
             <ReviewCard 
@@ -102,7 +107,17 @@ const ProfilePage = () => {
         </div>
       </section>
 
-      <ProfileGrid />
+      {/* 프로필 설정 섹션 타이틀 */}
+      <section className="my-16">
+        <SectionTitle title="프로필 설정" hideAllBtn={true} />
+
+        <div className="mt-4">
+          <ProfileGrid 
+            user={mockUser} 
+            onLogout={() => alert('로그아웃 클릭!')} 
+          />
+        </div>
+      </section>
     </div>
   );
 };

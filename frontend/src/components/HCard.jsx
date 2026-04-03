@@ -22,7 +22,7 @@ const HCard = ({ id, type, title, poster, genre, runtime, vote_average, showCura
               <span className='text-sm font-bold text-primary-400'>{vote_average?.toFixed(1)}</span>
             </div>
           </div>
-          <h3 className='text-2xl font-semibold text-neutral-50 truncate'>{title}</h3>
+          <h3 className='text-2xl font-regular text-neutral-50 truncate'>{title}</h3>
           <p className='text-sm text-neutral-400'>{genre} • {runtime}분</p>
         </div>
       </div>
