@@ -24,6 +24,9 @@ export const EP = {
   discover: (type, params) => ax.get(`/discover/${type}`, { params }),
   genres: (type) => ax.get(`/genre/${type}/list`),
 
+  // 비디오 (언어별 탐색용)
+  videos: (type, id, lang) => ax.get(`/${type}/${id}/videos`, { params: { language: lang } }),
+
   // 인물
   person: (id) => ax.get(`/person/${id}`, {
     params: { append_to_response: 'combined_credits' }
