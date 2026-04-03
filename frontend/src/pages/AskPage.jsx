@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import ChatBubble from '../components/ChatBubble'
-import { AI } from '../api/ai' // ✅ 신규 AI 서비스 임포트
 
-// 초기 메시지
+// ✅ ChatBtn과 동일한 엔드포인트 설정
+const BACKEND = 'https://vodamovie.onrender.com/chat'
+
 const INIT_MESSAGES = [
   { id: 1, role: 'ai', text: '안녕하세요! 당신만의 영화 큐레이터 VODA AI입니다. \n오늘의 기분이나 선호하는 장르를 말씀해 주시면 딱 맞는 콘텐츠를 추천해 드릴게요.' },
 ]
 
-// 빠른 대화 시작 키워드
 const QUICK_PROMPTS = [
   "비 오는 날 어울리는 로맨스 추천해줘",
   "보다에서 인기있는 영화 보다",
@@ -37,18 +37,23 @@ const AskPage = () => {
     setLoading(true)
 
     try {
-      // ✅ AI 서비스 호출
-      const res = await AI.chat(trimmed)
-      const replyText = res.data.reply
+      // ✅ ChatBtn의 fetch 방식과 동일하게 수정
+      const res = await fetch(BACKEND, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: trimmed }),
+      })
       
-      setMessages((prev) => [...prev, { id: Date.now() + 1, role: 'ai', text: replyText }])
+      if (!res.ok) throw new Error('서버 응답 오류')
+      
+      const data = await res.json()
+      setMessages((prev) => [...prev, { id: Date.now() + 1, role: 'ai', text: data.reply }])
     } catch (err) {
-      // ✅ 구체적인 에러 메시지 처리
-      const errorMessage = err.response?.data?.detail || err.message || '서버와의 통신이 원활하지 않습니다.'
+      // ✅ VODA 프로젝트 지침에 따른 에러 처리
       setMessages((prev) => [...prev, { 
         id: Date.now() + 1, 
         role: 'ai', 
-        text: `연결 오류: ${errorMessage}. 백엔드 서버(8000번 포트)가 실행 중인지 확인해 주세요.` 
+        text: '서버 연결에 실패했습니다. 백엔드 서버 상태를 확인하거나 잠시 후 다시 시도해주세요.' 
       }])
     } finally {
       setLoading(false)
@@ -64,11 +69,9 @@ const AskPage = () => {
 
   return (
     <div className='flex flex-col h-[calc(100vh-80px)] px-12 py-10 bg-zinc-950'>
-      {/* 상단 헤더 */}
       <div className="max-w-3xl w-full mx-auto mb-10">
       </div>
 
-      {/* 메시지 목록 */}
       <div 
         ref={messagesRef} 
         className='flex-1 min-h-0 max-w-3xl w-full mx-auto flex flex-col gap-6 pb-10 overflow-y-auto no-scrollbar'
@@ -83,10 +86,7 @@ const AskPage = () => {
         {loading && <ChatBubble msg='...' isAi={true} />}
       </div>
 
-      {/* 입력창 영역 */}
       <div className='sticky bottom-0 pb-10 pt-4 max-w-3xl w-full mx-auto flex flex-col gap-5'>
-        
-        {/* 빠른 추천 키워드 */}
         {messages.length < 3 && (
           <div className="flex flex-wrap gap-2 justify-start">
             {QUICK_PROMPTS.map((prompt, idx) => (
@@ -101,7 +101,6 @@ const AskPage = () => {
           </div>
         )}
 
-        {/* 메인 입력창 */}
         <div className='backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl px-6 py-2 flex items-center gap-4 shadow-2xl focus-within:border-primary-400/50 transition-all'>
           <input
             type='text'
