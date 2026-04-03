@@ -71,9 +71,10 @@ const ProfilePage = () => {
         <Feed
           type="play" 
           title="시청 중인 콘텐츠"
-          subtitle="이어보기"
+          subtitle=""
           items={popularMovies.slice(0, 5)}
           mediaType="movie"
+          link="/browse/movie/popular?title=시청 중인 콘텐츠"
         />
       )}
 

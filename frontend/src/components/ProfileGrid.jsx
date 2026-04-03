@@ -53,7 +53,7 @@ const ProfileGrid = ({ user, onLogout }) => {
             <p className='font-serif text-3xl text-white font-bold'>{user?.name}</p>
             <p className='font-serif text-lg text-neutral-500'>{user?.email}</p>
             {user?.isSubscribed && (
-              <span className='mt-2 bg-secondary-500/20 text-secondary-400 border border-secondary-500/30 text-xs px-3 py-1 rounded-full w-fit'>
+              <span className='mt-2 bg-secondary-500/20 text-secondary-400 border border-secondary-500/30 text-sm px-3 py-1 rounded-full w-fit '>
                 구독중
               </span>
             )}

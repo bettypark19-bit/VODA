@@ -49,22 +49,43 @@ const PersonPage = () => {
       .catch(console.error);
   }, []);
 
-  // 검색 핸들러
+  // 검색 핸들러 (SearchBar의 onSubmit 연결)
   const handleSearch = (q) => {
-    setSearchQuery(q);
-    setSearchLoading(true);
-    EP.searchPerson(q)
-      .then((res) => {
-        setSearchResults(res.data.results || []);
-        setSearchLoading(false);
-      })
-      .catch(() => setSearchLoading(false));
-  };
+    const query = q?.trim() || ''
+    setSearchQuery(query)
+    if (!query) clearSearch()
+  }
+
+  // 실시간 검색 디바운스 처리
+  useEffect(() => {
+    const query = searchQuery?.trim()
+    if (!query) {
+      setSearchResults([])
+      setSearchLoading(false)
+      return
+    }
+
+    const timer = setTimeout(() => {
+      setSearchLoading(true)
+      EP.searchPerson(query)
+        .then((res) => {
+          setSearchResults(res.data.results || [])
+          setSearchLoading(false)
+        })
+        .catch((err) => {
+          console.error("Search Error:", err)
+          setSearchLoading(false)
+        })
+    }, 400) // 대기 시간을 0.4초로 약간 늘려 안정성 확보
+
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   const clearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-  };
+    setSearchQuery('')
+    setSearchResults([])
+    setSearchLoading(false)
+  }
 
   // 변경 4: persons 분기
   const persons =
@@ -113,6 +134,14 @@ const PersonPage = () => {
             <SearchBar
               variant="normal"
               placeholder="배우, 감독 이름을 검색해보세요."
+              value={searchQuery}
+              onChange={(e) => {
+                const q = e.target.value
+                setSearchQuery(q)
+                if (!q) {
+                  setSearchResults([])
+                }
+              }}
               onSubmit={handleSearch}
             />
           </div>
