@@ -79,7 +79,7 @@ const RankCard = ({ rank, id, type = 'movie', title, poster, genre, onClick }) =
         hovered && 'ring-2 ring-primary-400/50',
       )}>
         <img
-          src={EP.img(poster)}
+          src={poster}
           alt={title}
           className='size-full object-cover'
         />

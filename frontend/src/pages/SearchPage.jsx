@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router'
 import SearchBar from '../components/SearchBar'
 import MoodGrid from '../components/MoodGrid'
 import SectionTitle from '../components/SectionTitle'
@@ -6,7 +7,9 @@ import MovieCard from '../components/MovieCard'
 import { EP } from '../api/tmdb'
 
 const SearchPage = () => {
-  const [keyword, setKeyword] = useState('')
+  const [searchParams] = useSearchParams()
+  // GNB에서 /search?q=xxx 로 넘어오면 초기값으로 설정
+  const [keyword, setKeyword] = useState(searchParams.get('q') || '')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [prevKeyword, setPrevKeyword] = useState('')

@@ -17,7 +17,6 @@ const BrowsePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
     const extra = genre ? { with_genres: genre } : {};
     EP.browsePage(mediaType, category, page, extra)

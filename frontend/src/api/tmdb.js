@@ -21,6 +21,7 @@ export const EP = {
 
   // 검색/필터
   search: (q) => ax.get('/search/multi', { params: { query: q } }),
+  searchPerson: (q) => ax.get('/search/person', { params: { query: q } }),
   discover: (type, params) => ax.get(`/discover/${type}`, { params }),
   genres: (type) => ax.get(`/genre/${type}/list`),
 

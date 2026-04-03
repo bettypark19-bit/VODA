@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EP } from "../api/tmdb";
 import GenreTab from "../components/GenreTab";
 import PersonCard from "../components/PersonCard";
@@ -25,25 +24,47 @@ const PersonPage = () => {
   const [actors, setActors] = useState([]);
   const [directors, setDirectors] = useState([]);
   const [weekTrending, setWeekTrending] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
-    // 변경 후
+    // 배우/감독 필터링을 위해 인기 인물 1~2페이지(40명) 동시 fetch
     Promise.all([
       EP.personTrending("day"),
       EP.personPopular(),
       EP.personTrending("week"),
+      EP.browsePerson("popular", 2),
     ])
-      .then(([trendRes, popRes, weekRes]) => {
+      .then(([trendRes, popRes, weekRes, pop2Res]) => {
         const pop = popRes.data.results;
+        const popAll = [...pop, ...(pop2Res.data.results || [])];
         setTrending(trendRes.data.results);
         setPopular(pop);
-        setActors(pop.filter((p) => p.known_for_department === "Acting"));
-        setDirectors(pop.filter((p) => p.known_for_department === "Directing"));
+        setActors(popAll.filter((p) => p.known_for_department === "Acting"));
+        setDirectors(popAll.filter((p) => p.known_for_department === "Directing"));
         setWeekTrending(weekRes.data.results);
         setLoading(false);
       })
       .catch(console.error);
   }, []);
+
+  // 검색 핸들러
+  const handleSearch = (q) => {
+    setSearchQuery(q);
+    setSearchLoading(true);
+    EP.searchPerson(q)
+      .then((res) => {
+        setSearchResults(res.data.results || []);
+        setSearchLoading(false);
+      })
+      .catch(() => setSearchLoading(false));
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchResults([]);
+  };
 
   // 변경 4: persons 분기
   const persons =
@@ -87,22 +108,69 @@ const PersonPage = () => {
             감독들을 만나보세요.
           </p>
 
-          {/* 검색바 컴포넌트 — 너비 확장 (max-w-4xl) */}
+          {/* 검색바 */}
           <div className="w-full max-w-4xl">
             <SearchBar
               variant="normal"
-              placeholder="궁금한 영화나 TV 프로그램을 물어보세요."
+              placeholder="배우, 감독 이름을 검색해보세요."
+              onSubmit={handleSearch}
             />
           </div>
         </div>
       </section>
 
-      {/* 인물 탭 */}
+      {/* 검색 결과 섹션 */}
+      {searchQuery && (
+        <div className="px-12 mt-8">
+          {/* 검색어 + 초기화 */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2.5">
+              <div className="w-3 h-12 bg-primary-400 rounded-full shrink-0" />
+              <h2 className="font-serif font-bold text-3xl text-neutral-50">
+                '{searchQuery}' 검색 결과
+              </h2>
+            </div>
+            <button
+              onClick={clearSearch}
+              className="flex items-center gap-2 text-neutral-400 hover:text-primary-400 transition-colors font-serif text-base"
+            >
+              <i className="fa-solid fa-xmark" />
+              검색 초기화
+            </button>
+          </div>
+
+          {searchLoading ? (
+            <div className="text-center text-neutral-500 py-20">검색 중...</div>
+          ) : searchResults.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {searchResults.map((person) => (
+                <PersonCard
+                  key={person.id}
+                  id={person.id}
+                  name={person.name}
+                  img={person.profile_path}
+                  role={person.known_for_department}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <i className="fa-solid fa-user-slash text-neutral-700 text-5xl mb-4 block" />
+              <p className="text-neutral-500 font-serif text-lg">'{searchQuery}'에 대한 검색 결과가 없습니다.</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 인물 탭 — 검색 중이 아닐 때만 표시 */}
+      {!searchQuery && (
       <div className="mt-8">
         <GenreTab tabs={TABS} active={activeTab} onChange={setActiveTab} />
       </div>
+      )}
 
-      {/* 인물 그리드 섹션 */}
+      {/* 인물 그리드 섹션 — 검색 중이 아닐 때만 표시 */}
+      {!searchQuery && (
       <div className="px-12">
         <Feed
           type="person"
@@ -120,8 +188,10 @@ const PersonPage = () => {
           link="/person/category?title=이번+주+트렌딩+인물&category=trending_week"
         />{" "}
       </div>
+      )}
 
-      {/* Focus 섹션 */}
+      {/* Focus 섹션 — 검색 중이 아닐 때만 표시 */}
+      {!searchQuery && (
       <div className="px-12 mt-20">
         <SectionTitle
           title="포커스 인물"
@@ -151,6 +221,7 @@ const PersonPage = () => {
           </div>
         </div>
       </div>
+      )}
 
       <ChatBtn />
     </div>

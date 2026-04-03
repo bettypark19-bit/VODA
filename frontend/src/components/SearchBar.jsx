@@ -2,8 +2,20 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faStar } from '@fortawesome/free-solid-svg-icons'
 
-const SearchBar = ({ variant = 'normal', onSubmit }) => {
-  const [value, setValue] = useState('')
+// value/onChange를 받으면 controlled 모드, 없으면 내부 state로 동작
+const SearchBar = ({ variant = 'normal', onSubmit, value: externalValue, onChange: externalOnChange, placeholder }) => {
+  const [internalValue, setInternalValue] = useState('')
+
+  const isControlled = externalValue !== undefined
+  const value = isControlled ? externalValue : internalValue
+
+  const handleChange = (e) => {
+    if (isControlled) {
+      externalOnChange?.(e)
+    } else {
+      setInternalValue(e.target.value)
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -11,6 +23,8 @@ const SearchBar = ({ variant = 'normal', onSubmit }) => {
       onSubmit(value)
     }
   }
+
+  const defaultPlaceholder = variant === 'ai' ? 'AI에게 물어보세요' : '궁금한 영화나 TV 프로그램을 물어보세요.'
 
   return (
     <form onSubmit={handleSubmit} className='w-full mx-auto'>
@@ -22,8 +36,8 @@ const SearchBar = ({ variant = 'normal', onSubmit }) => {
         <input
           type='text'
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={variant === 'ai' ? 'AI에게 물어보세요' : '궁금한 영화나 TV 프로그램을 물어보세요.'}
+          onChange={handleChange}
+          placeholder={placeholder || defaultPlaceholder}
           className='bg-transparent outline-none text-white w-full placeholder-zinc-400'
         />
       </div>
