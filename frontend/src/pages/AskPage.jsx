@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import ChatBubble from '../components/ChatBubble'
 
-const BACKEND = 'http://localhost:8000/chat'
+const BACKEND = 'https://vodamovie.onrender.com/chat'
 
 const INIT_MESSAGES = [
   { id: 1, role: 'ai', text: '안녕하세요! 오늘 어떤 영화가 보고 싶으신가요? 취향을 알려주시면 제가 찾아드릴게요.' },
