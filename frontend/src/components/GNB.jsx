@@ -7,10 +7,12 @@ import {
   faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import { twMerge } from "tailwind-merge";
+import Alarm from './Alarm';
 
 const GNB = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const [isAlarmOpen, setIsAlarmOpen] = useState(false);
 
   const menus = [
     { name: "홈", path: "/" },
@@ -80,9 +82,17 @@ const GNB = () => {
           />
         </form>
         {/* 알림 */}
-        <button className="text-neutral-400 hover:text-primary-400 transition-colors text-2xl">
-          <FontAwesomeIcon icon={faBell} />
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setIsAlarmOpen(!isAlarmOpen)}
+            className={`transition-colors text-2xl ${isAlarmOpen ? "text-primary-400" : "text-neutral-400 hover:text-primary-400"}`}
+          >
+            <FontAwesomeIcon icon={faBell} />
+          </button>
+
+          {/* Alarm 컴포넌트 연결 */}
+          <Alarm isOpen={isAlarmOpen} onClose={() => setIsAlarmOpen(false)} />
+        </div>{" "}
         {/* 프로필 */}
         <Link
           to="/profile"
