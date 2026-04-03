@@ -19,7 +19,7 @@ const HomePage = () => {
       EP.topRated('movie')
     ]).then(([pop, now, top]) => {
       const popResults = pop.data.results
-      setHeroMovie(popResults[0])
+      setHeroMovie(popResults[Math.floor(Math.random() * popResults.length)])
       setPopularMovies(popResults)
       setNewMovies(now.data.results)
       setTopRatedMovies(top.data.results)

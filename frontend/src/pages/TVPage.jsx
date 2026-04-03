@@ -22,7 +22,7 @@ const TVPage = () => {
 
     EP.popular('tv').then((res) => {
       const results = res.data.results
-      setHeroMovie(results[0])
+      setHeroMovie(results[Math.floor(Math.random() * results.length)])
       setRankMovies(results.slice(0, 10))
       setLoading(false)
     })
