@@ -24,16 +24,22 @@ const PersonPage = () => {
   const [loading, setLoading] = useState(true);
   const [actors, setActors] = useState([]);
   const [directors, setDirectors] = useState([]);
+  const [weekTrending, setWeekTrending] = useState([]);
 
   useEffect(() => {
-    Promise.all([EP.personTrending("day"), EP.personPopular()])
-      // 변경 3: useEffect 내부 — popular 응답에서 필터링
-      .then(([trendRes, popRes]) => {
+    // 변경 후
+    Promise.all([
+      EP.personTrending("day"),
+      EP.personPopular(),
+      EP.personTrending("week"),
+    ])
+      .then(([trendRes, popRes, weekRes]) => {
         const pop = popRes.data.results;
         setTrending(trendRes.data.results);
         setPopular(pop);
         setActors(pop.filter((p) => p.known_for_department === "Acting"));
         setDirectors(pop.filter((p) => p.known_for_department === "Directing"));
+        setWeekTrending(weekRes.data.results);
         setLoading(false);
       })
       .catch(console.error);
@@ -104,6 +110,13 @@ const PersonPage = () => {
           items={persons}
           mediaType="person"
         />
+        {/* 이번 주 트렌딩 인물 */}
+        <Feed
+          type="person"
+          title="이번 주 트렌딩 인물"
+          items={weekTrending}
+          mediaType="person"
+        />{" "}
       </div>
 
       {/* Focus 섹션 */}
