@@ -1,8 +1,18 @@
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
+import { useEffect } from 'react'
 import GNB from './components/GNB'
 import Footer from './components/Footer'
 import ChatBtn from './components/ChatBtn'
 import ScoreSummary from './components/ScoreSummary';
+
+// 페이지 이동 시 스크롤을 맨 위로 초기화
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 /**
  * Layout: 전역 레이아웃
@@ -10,6 +20,7 @@ import ScoreSummary from './components/ScoreSummary';
  */
 const Layout = () => (
   <div className='min-h-screen flex flex-col bg-base'>
+    <ScrollToTop />
     <GNB />
     <main className='flex-1 w-full max-w-content mx-auto'>
       <Outlet />
