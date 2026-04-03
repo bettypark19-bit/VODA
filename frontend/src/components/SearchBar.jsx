@@ -38,7 +38,7 @@ const SearchBar = ({ variant = 'normal', onSubmit, value: externalValue, onChang
           value={value}
           onChange={handleChange}
           placeholder={placeholder || defaultPlaceholder}
-          className='bg-transparent outline-none text-white w-full placeholder-zinc-400'
+          className='bg-transparent outline-none text-white w-full placeholder-zinc-400 font-serif text-xl'
         />
       </div>
     </form>
