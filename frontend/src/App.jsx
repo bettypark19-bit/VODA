@@ -18,17 +18,26 @@ const ScrollToTop = () => {
  * Layout: 전역 레이아웃
  * 화면 전체 너비를 1920px로 제한하고 중앙 정렬합니다.
  */
-const Layout = () => (
-  <div className='min-h-screen flex flex-col bg-base'>
-    <ScrollToTop />
-    <GNB />
-    <main className='flex-1 w-full max-w-content mx-auto'>
-      <Outlet />
-    </main>
-    <Footer />
-    <ChatBtn />
-  </div>
-)
+const Layout = () => {
+  const { pathname } = useLocation();
+
+  // ✅ 현재 경로가 '/ask' 인지 확인 (VODA AI 전용 페이지 여부)
+  const isAskPage = pathname === '/ask';
+
+  return (
+    <div className='min-h-screen flex flex-col bg-base'>
+      <ScrollToTop />
+      <GNB />
+      <main className='flex-1 w-full max-w-content mx-auto'>
+        <Outlet />
+      </main>
+      <Footer />
+      
+      {/* ✅ AskPage가 아닐 때만 ChatBtn을 렌더링하도록 조건부 처리 */}
+      {!isAskPage && <ChatBtn />}
+    </div>
+  )
+}
 
 const TestPage = () => {
   // TMDB 응답 구조와 유사한 테스트 데이터
