@@ -1,62 +1,83 @@
 import { useRef, useCallback } from 'react'
 
-// 가로 스크롤 컨테이너를 마우스 드래그로 움직이는 훅
-const useDragScroll = () => {
+/**
+ * 마우스 드래그로 가로 스크롤을 제어하는 최종 고도화 훅
+ */
+export default function useDragScroll() {
   const ref = useRef(null)
-  const isDragging = useRef(false)
-  const hasDragged = useRef(false) // 실제 이동이 있었는지 여부
+  const isDown = useRef(false)
   const startX = useRef(0)
   const scrollLeft = useRef(0)
+  const isMoved = useRef(false) // 드래그 발생 여부 (ref로 관리하여 즉각 반영)
 
-  const onMouseDown = useCallback((e) => {
-    isDragging.current = true
-    hasDragged.current = false
-    startX.current = e.pageX - ref.current.offsetLeft
+  const onMouseDown = (e) => {
+    isDown.current = true
+    isMoved.current = false
+    const boardLeft = ref.current.getBoundingClientRect().left
+    startX.current = e.clientX - boardLeft
     scrollLeft.current = ref.current.scrollLeft
+    
+    // 스타일 즉시 변경
     ref.current.style.cursor = 'grabbing'
-  }, [])
+    ref.current.style.userSelect = 'none'
+  }
 
-  const onMouseMove = useCallback((e) => {
-    if (!isDragging.current) return
-    // 마우스 버튼이 이미 떼진 경우 드래그 종료
-    if (e.buttons === 0) {
-      isDragging.current = false
-      ref.current.style.cursor = 'grab'
-      return
+  const onMouseLeave = () => {
+    if (!isDown.current) return
+    isDown.current = false
+    ref.current.style.cursor = 'grab'
+    ref.current.style.removeProperty('user-select')
+  }
+
+  const onMouseUp = () => {
+    if (!isDown.current) return
+    isDown.current = false
+    ref.current.style.cursor = 'grab'
+    ref.current.style.removeProperty('user-select')
+    
+    // 마우스 버튼을 뗐을 때 드래그 중이었다면 클릭 방지를 위해 아주 짧은 시간 동안 true 유지
+    if (isMoved.current) {
+      setTimeout(() => {
+        isMoved.current = false
+      }, 10)
     }
+  }
+
+  const onMouseMove = (e) => {
+    if (!isDown.current) return
     e.preventDefault()
-    const x = e.pageX - ref.current.offsetLeft
-    const walk = (x - startX.current) * 1.2 // 드래그 속도 배율
-    // 5px 이상 움직이면 드래그로 간주
-    if (Math.abs(x - startX.current) > 5) hasDragged.current = true
+    
+    const boardLeft = ref.current.getBoundingClientRect().left
+    const x = e.clientX - boardLeft
+    const walk = (x - startX.current) * 1.5 // 감도 조절
+    
+    if (Math.abs(walk) > 5) {
+      isMoved.current = true
+    }
+    
     ref.current.scrollLeft = scrollLeft.current - walk
-  }, [])
+  }
 
-  const onMouseUp = useCallback(() => {
-    isDragging.current = false
-    ref.current.style.cursor = 'grab'
-  }, [])
-
-  const onMouseLeave = useCallback(() => {
-    isDragging.current = false
-    ref.current.style.cursor = 'grab'
-  }, [])
-
-  // 이미지 등 자식 요소의 기본 드래그 동작 차단
-  const onDragStart = useCallback((e) => {
-    e.preventDefault()
-  }, [])
-
-  // 드래그가 있었으면 캡처 단계에서 click 차단 (Link 이동 방지)
+  // 드래그 중 클릭(상세 페이지 이동)을 원천 봉쇄
   const onClickCapture = useCallback((e) => {
-    if (hasDragged.current) {
+    if (isMoved.current) {
       e.stopPropagation()
       e.preventDefault()
-      hasDragged.current = false
     }
   }, [])
 
-  return { ref, onMouseDown, onMouseMove, onMouseUp, onMouseLeave, onDragStart, onClickCapture }
-}
+  // 브라우저 기본 이미지 드래그 방지
+  const onDragStart = (e) => {
+    e.preventDefault()
+  }
 
-export default useDragScroll
+  return {
+    ref,
+    onMouseDown,
+    onMouseLeave,
+    onMouseUp,
+    onMouseMove,
+    onClickCapture,
+    onDragStart
+  }
+}
