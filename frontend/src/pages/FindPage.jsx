@@ -78,22 +78,22 @@ const FindPage = () => {
     <main className='pt-24 pb-20 min-h-screen px-8 md:px-16'>
 
       {/* 1. 검색바 */}
-      <section className='mb-10 max-w-2xl'>
+      <section className='mb-10 max-w-2xl mx-auto'>
         <SearchBar onSubmit={handleSearch} />
       </section>
 
       {/* 2. FilterChips — 장르 / 연도 / 국가 */}
-      <section className='mb-12 space-y-6'>
+      <section className='mb-12'>
         <div>
-          <p className='text-zinc-500 text-sm mb-3 font-medium'>장르</p>
+          <p className='text-zinc-500 text-lg font-medium text-center'>장르</p>
           <FilterChips filters={GENRE_FILTERS} active={genre}  onChange={handleGenre} />
         </div>
         <div>
-          <p className='text-zinc-500 text-sm mb-3 font-medium'>연도</p>
+          <p className='text-zinc-500 text-lg font-medium text-center'>연도</p>
           <FilterChips filters={YEAR_FILTERS}  active={year}   onChange={(id) => updateFilter('year', id)} />
         </div>
         <div>
-          <p className='text-zinc-500 text-sm mb-3 font-medium'>국가</p>
+          <p className='text-zinc-500 text-lg font-medium text-center'>국가</p>
           <FilterChips filters={REGION_FILTERS} active={region} onChange={(id) => updateFilter('region', id)} />
         </div>
       </section>

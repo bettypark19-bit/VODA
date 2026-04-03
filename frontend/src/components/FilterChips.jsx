@@ -8,7 +8,7 @@ import ChipBtn from './ChipBtn'
  */
 const FilterChips = ({ filters = [], active, onChange }) => {
   return (
-    <nav className='flex flex-wrap gap-3 justify-center py-6'>
+    <nav className='flex flex-wrap gap-3 justify-center py-6 font-serif'>
       {filters.map((filter) => (
         <ChipBtn
           key={filter.id}
