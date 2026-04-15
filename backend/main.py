@@ -32,7 +32,7 @@ class ChatRequest(BaseModel):
     text: str
 
 # Hugging Face 설정
-HF_MODEL = "Qwen/Qwen2.5-72B-Instruct"
+HF_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 HF_URL = "https://router.huggingface.co/novita/v1/chat/completions"
 
 def ask_ai(q: str) -> str:
