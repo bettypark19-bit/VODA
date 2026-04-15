@@ -10,7 +10,7 @@ import json
 load_dotenv()
 
 # Render 환경변수에서 백엔드 자신의 URL 읽기. 로컬 실행 시 localhost로 대체
-SELF_URL = os.getenv("https://voda-r4s5.onrender.com")
+SELF_URL = os.getenv("SELF_URL", "http://localhost:8000")
 
 app = FastAPI(title="VODA AI Backend")
 
@@ -99,7 +99,7 @@ async def chat(req: ChatRequest):
 def read_root():
     return {
         "status": "VODA AI Backend is active",
-        "env_loaded": SELF_URL.exists(),
+        "self_url": SELF_URL,
         "has_token": bool(os.getenv("HF_TOKEN")),
         "token_preview": (
             os.getenv("HF_TOKEN")[:10] + "..." if os.getenv("HF_TOKEN") else None

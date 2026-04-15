@@ -51,6 +51,8 @@ const Hero = ({
 
   useEffect(() => {
     if (derivedTrailerKey) return
+    if (bgVideo) return
+    if (typeof id !== 'number' && !(typeof id === 'string' && /^\d+$/.test(id))) return
     if (id && !['person', 'home'].includes(type)) {
       const apiType = type === 'detail' ? location.pathname.split('/')[1] : type
       EP.detail(apiType, id).then(res => {
