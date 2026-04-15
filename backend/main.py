@@ -7,8 +7,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 import json
 
-# 1. 환경 변수 로드
-root_path = Path(__file__).resolve().parent.parent
+# 1. 환경 변수 로드 (backend/.env 기준)
+root_path = Path(__file__).resolve().parent
 env_path = root_path / ".env"
 
 if env_path.exists():
