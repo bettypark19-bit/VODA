@@ -252,5 +252,9 @@ async def get_movies():
 5. **필수**: 작업 시작 전 `.claude/skills/voda-vibe/` 및 `md/` 폴더의 모든 파일을 읽고 숙지한다.
 6. **필수**: Tailwind v4 유틸리티 클래스 사용. 일치하는 값이 없을 경우 유사 유틸리티 클래스로 적용한다. 유사한 클래스가 없을 경우 @theme를 사용한다.
 7. **Tailwind 임의값(arbitrary value) `[px값]` 절대 금지** — `max-w-[1920px]` 같은 하드코딩 대신 `max-w-screen-2xl` 등 표준 유틸리티 클래스를 사용한다. 표준 클래스가 없을 때만 `@theme` 토큰으로 정의한다.
+8. **`.env` 파일은 루트에 절대 생성 금지** — 환경변수는 반드시 각 폴더에만 위치한다.
+   - `frontend/.env` : `VITE_TMDB_API_KEY`, `VITE_BACKEND`
+   - `backend/.env`  : `HF_TOKEN`
+   - 루트 `.env`는 `.gitignore`에 명시되어 있으며 생성 자체를 금지한다.
 ## 스타일가이드
 @STYLEGUIDE.md

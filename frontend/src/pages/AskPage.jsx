@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ChatBubble from '../components/ChatBubble'
 
-const BACKEND = 'https://vodamovie.onrender.com/chat'
+const BACKEND = import.meta.env.VITE_BACKEND
 
 const INIT_MESSAGES = [
   { 
