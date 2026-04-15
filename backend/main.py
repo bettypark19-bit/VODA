@@ -31,9 +31,9 @@ app.add_middleware(
 class ChatRequest(BaseModel):
     text: str
 
-# Hugging Face 설정 (최신 라우터 주소로 업데이트)
-HF_MODEL = "Qwen/Qwen2.5-72B-Instruct" 
-HF_URL = f"https://router.huggingface.co/hf-inference/v1/chat/completions"
+# Hugging Face 설정
+HF_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+HF_URL = "https://router.huggingface.co/novita/v1/chat/completions"
 
 def ask_ai(q: str) -> str:
     token = os.getenv("HF_TOKEN")
