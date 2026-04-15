@@ -33,7 +33,7 @@ class ChatRequest(BaseModel):
 
 # Hugging Face 설정
 HF_MODEL = "Qwen/Qwen2.5-7B-Instruct"
-HF_URL = "https://router.huggingface.co/novita/v1/chat/completions"
+HF_URL = "https://router.huggingface.co/v1/chat/completions"
 
 def ask_ai(q: str) -> str:
     token = os.getenv("HF_TOKEN")

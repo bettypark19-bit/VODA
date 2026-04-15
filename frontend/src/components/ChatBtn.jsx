@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
-const BACKEND = 'https://vodamovie.onrender.com/chat';
+let BACKEND = 'https://vodamovie.onrender.com/chat';
+BACKEND = 'http://localhost:8000/chat';
 
 const INIT_MESSAGES = [
   {
