@@ -10,7 +10,7 @@ import json
 load_dotenv()
 
 # Render 환경변수에서 백엔드 자신의 URL 읽기. 로컬 실행 시 localhost로 대체
-SELF_URL = os.getenv("RENDER_EXTERNAL_URL", "http://localhost:8000")
+SELF_URL = os.getenv("https://voda-r4s5.onrender.com")
 
 app = FastAPI(title="VODA AI Backend")
 
