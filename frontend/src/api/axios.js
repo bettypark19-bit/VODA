@@ -11,8 +11,8 @@ const tmdb = axios.create({
 })
 
 // 2. VODA 백엔드 API 인스턴스 (AI 챗봇용)
-export const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND || 'http://localhost:8000',
+export const api2 = axios.create({
+  baseURL: 'https://vodamovie.onrender.com/chat',
   headers: {
     'Content-Type': 'application/json',
   },

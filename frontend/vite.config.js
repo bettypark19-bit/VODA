@@ -5,6 +5,14 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  envDir: '..',
   plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
+  server: {
+    proxy: {
+      '/api/chat': {
+        target: 'https://vodamovie.onrender.com',
+        changeOrigin: true,
+        rewrite: (path) => '/chat',
+      },
+    },
+  },
 });
